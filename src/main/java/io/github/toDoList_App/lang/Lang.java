@@ -1,4 +1,4 @@
-package io.github.toDoList_App;
+package io.github.toDoList_App.lang;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "languages")
-class Lang {
+public class Lang {
 
     /**
      * Hibernate (JPA) needs it.

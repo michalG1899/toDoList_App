@@ -1,5 +1,8 @@
-package io.github.toDoList_App;
+package io.github.toDoList_App.hello;
 
+import io.github.toDoList_App.hello.HelloService;
+import io.github.toDoList_App.lang.Lang;
+import io.github.toDoList_App.lang.LangRepository;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -20,7 +23,7 @@ public class HelloServiceTest {
         var SUT = new HelloService(mockRepository);
 
         // when
-        var result = SUT.prepareGreeting(null, "-1");
+        var result = SUT.prepareGreeting(null, -1);
 
         //then
         assertEquals(WELCOME + " " + HelloService.FALLBACK_NAME + "!", result);
@@ -32,7 +35,7 @@ public class HelloServiceTest {
         var SUT = new HelloService();
         var name = "test";
         // when
-        var result = SUT.prepareGreeting(name, "-1");
+        var result = SUT.prepareGreeting(name, -1);
 
         //then
         assertEquals(WELCOME + " " + name + "!", result);
@@ -49,23 +52,23 @@ public class HelloServiceTest {
         //then
         assertEquals(FALLBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME + "!", result);
     }
-    @Test
-    public void test_prepareGreeting_textLang_returnsGreetingWithFallbackIdLang() {
-        //given
-        var mockRepository = fallbackLangIdRepository();
-        var SUT = new HelloService(mockRepository);
-
-        // when
-        var result = SUT.prepareGreeting(null, "abc");
-
-        //then
-        assertEquals(FALLBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME + "!", result);
-    }
+//    @Test
+//    public void test_prepareGreeting_textLang_returnsGreetingWithFallbackIdLang() {
+//        //given
+//        var mockRepository = fallbackLangIdRepository();
+//        var SUT = new HelloService(mockRepository);
+//
+//        // when
+//        var result = SUT.prepareGreeting(null, "abc");
+//
+//        //then
+//        assertEquals(FALLBACK_ID_WELCOME + " " + HelloService.FALLBACK_NAME + "!", result);
+//    }
 
     private LangRepository fallbackLangIdRepository() {
         return new LangRepository()  {
             @Override
-            Optional<Lang> findById(Integer id) {
+            public Optional<Lang> findById(Integer id) {
                 if (id.equals(HelloService.FALLBACK_LANG.getId())) {
                     return Optional.of(new Lang(null, FALLBACK_ID_WELCOME, null));
                 }
@@ -77,7 +80,7 @@ public class HelloServiceTest {
     private LangRepository alwaysReturningHelloRepository() {
         return new LangRepository() {
             @Override
-            Optional<Lang> findById(Integer id) {
+            public Optional<Lang> findById(Integer id) {
                 return Optional.of(new Lang(null, WELCOME, null));
             }
         };
