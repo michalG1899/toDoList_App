@@ -40,4 +40,16 @@ class TodoRepository {
         return newTodo;
     }
 
+    public Todo deleteTodo(Integer id){
+        var session = HibernateUtil.getSessionFactory().openSession();
+        var transaction = session.beginTransaction();
+
+        var todo = session.get(Todo.class, id);
+        session.delete(todo);
+
+        transaction.commit();
+        session.close();
+        return todo;
+    }
+
 }

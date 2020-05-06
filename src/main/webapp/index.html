@@ -65,12 +65,26 @@
             .then(updatedTodo => checkbox.checked = !!updatedTodo.done)
             .catch(console.warn);
         });
+
       label.appendChild(checkbox);
       label.appendChild(document.createTextNode(` ${todo.text}`));
-      document.getElementById('allTodos').appendChild(label);
+
+      const btn = document.createElement('button');
+      btn.classList.add('pure-button');
+      btn.addEventListener('click',
+        (event) => {
+          event.preventDefault();
+          fetch(`${TODO_API_URL}/${todo.id}`, { method: 'DELETE' })
+          .then(processOkResponse)
+          .then(() => { label.remove(); btn.remove(); })
+          .catch(console.warn);
+        });
+        btn.appendChild(document.createTextNode(`Usuń trwale zadanie`));
+      document.getElementById('allTodos').appendChild(label).appendChild(btn);
+      
     }
 
-    initWelcomeForm();
+       initWelcomeForm();
 
     function initWelcomeForm() {
       const CODE_TO_EMOJI = {

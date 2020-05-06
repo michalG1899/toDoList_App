@@ -61,4 +61,12 @@ public class TodoServlet extends HttpServlet {
         resp.setContentType("application/json;charset=UTF-8");
         mapper.writeValue(resp.getOutputStream(), repository.addTodo(newTodo));
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json;charset=UTF-8");
+        String deleteId = req.getPathInfo();
+        var deleteTodo = repository.deleteTodo(Integer.valueOf(deleteId.substring(1)));
+        mapper.writeValue(resp.getOutputStream(), deleteTodo);
+    }
 }
